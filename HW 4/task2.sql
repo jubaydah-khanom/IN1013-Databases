@@ -8,7 +8,7 @@ CREATE TABLE petPet (
     petname VARCHAR(20) NOT NULL,
     owner VARCHAR(45),
     species VARCHAR(45) NOT NULL,
-    gender CHAR(1) NOT NULL CHECK (gender IN ('M', 'F')), 
+    gender CHAR(1) CHECK (gender IN ('M', 'F')), 
     birth DATE,
     death DATE,
     PRIMARY KEY (petname)
@@ -20,10 +20,13 @@ CREATE TABLE petEvent (
     eventtype VARCHAR(15), 
     remark VARCHAR(255),
     PRIMARY KEY (petname, eventdate),
-    FOREIGN KEY (petname) REFERENCES petPet (petname)
-)
+    FOREIGN KEY (petname) REFERENCES petPet (petname) ON DELETE CASCADE 
+    -- ON DELETE CASCADE allows for entry from petPet to also be removed from petEvent 
+);
 
 -- DESCRIBE table; shows table in terminal
+
+-- INSERT values into tables
 
 INSERT INTO petPet VALUES
     ("Fluffy", "Harold", "cat", "F", "1993-02-04", NULL),
@@ -48,3 +51,31 @@ INSERT INTO petEvent VALUES
     ("Fang", "1998-08-28", "birthday", "Gave him a new chew toy"),
     ("Claws", "1998-03-17","birthday", "Gave him a new flea collar"),
     ("Whistler", "1998-12-09", "birthday", "First birthday");
+
+-- INSERT new values
+
+INSERT INTO petPet VALUES
+    ("Hammy", "Diane", "hamster", "M", "2010-10-30", NULL);
+
+INSERT INTO petEvent VALUES
+    ("Fluffy", "2020-10-15", "vet", "antibiotics"),
+    ("Hammy", "2020-10-15", "vet", "antibiotics");
+
+-- UPDATE values
+
+UPDATE petEvent
+SET remark = "5 kittens, 2 male, 3 female"
+WHERE petname = "Fluffy";
+
+UPDATE petEvent
+SET petname = "Claws"
+WHERE eventdate = "1997-08-03";
+
+UPDATE petPet
+SET death = "2020-09-01"
+WHERE petname = "Puffball";
+
+-- DELETE values
+
+DELETE FROM petPet
+WHERE owner = "Harold" AND species = "dog";
