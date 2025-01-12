@@ -126,6 +126,8 @@ WHERE member_id = (
 
 
 /* 1) Find all Premium Members */
+select '1)' AS '';
+
 SELECT A.name AS "Name", A.member_id AS "Member ID"
 FROM gymMembers A
 INNER JOIN gymMembership B
@@ -133,11 +135,15 @@ ON A.member_id = B.member_id
 WHERE membership_name LIKE "%Premium%";
 
 /* 2) How many bookings does each activity have? */
+select '2)' AS '';
+
 SELECT activity_name AS "Activity", COUNT(booking_id) AS "Number of Bookings"
 FROM gymBookings
 GROUP BY activity_name;
 
 /* 3) Calculate total spend on activities by each member */
+select '3)' AS '';
+
 SELECT A.name AS "Name", A.member_id AS "Member ID", SUM(C.fee) AS "Total Spend"
 FROM gymMembers A
 INNER JOIN gymBookings B
@@ -147,6 +153,8 @@ ON B.activity_name = C.activity_name
 GROUP BY A.name, A.member_id;
 
 /* 4) Find all activities that cost more than Steam Room */
+select '4)' AS '';
+
 SELECT activity_name AS "Activity", fee AS "Fee"
 FROM gymActivities
 WHERE fee > (
@@ -156,6 +164,8 @@ WHERE fee > (
 );
 
 /* 5) List members that have a Basic Membership and never booked an activity */
+select '5)' AS '';
+
 SELECT A.name AS "Name", A.member_id AS "Member ID"
 FROM gymMembers A
 INNER JOIN gymMembership B
@@ -165,6 +175,8 @@ ON A.member_id = C.member_id
 WHERE B.membership_name = "Basic" AND C.booking_id IS NULL;
 
 /* 6) List all members that have booked Swimming or Gym, and the total spend on each activity */
+select '6)' AS '';
+
 SELECT DISTINCT A.name AS "Name", B.activity_name AS "Activity Name", SUM(C.fee) AS "Total Spend"
 FROM gymMembers A
 INNER JOIN gymBookings B 
@@ -176,6 +188,8 @@ GROUP BY A.name, B.activity_name
 ORDER BY A.name, B.activity_name;
 
 /* 7) List all female members and members that have booked an activity */
+select '7)' AS '';
+
 SELECT A.name AS "Name", A.gender AS "Gender"
 FROM gymMembers A
 WHERE A.gender LIKE "%Female%"
@@ -187,6 +201,8 @@ ON A.member_id = B.member_id
 WHERE A.gender LIKE "%Female%";
 
 /* 8) List members with more than one booking */
+select '8)' AS '';
+
 SELECT name AS "Name", member_id AS "Member ID"
 FROM gymMembers
 WHERE member_id IN (
